@@ -4,7 +4,8 @@
   "description": "An react UI project with docker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production",
+    "start:dev": "webpack-dev-server --color"
   },
   "keywords": [
     "React",
@@ -13,6 +14,8 @@
   "author": "Yuchen Qiao",
   "license": "MIT",
   "dependencies": {
+    "concurrently": "^4.1.1",
+    "normalize.css": "^8.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^4.3.2"
@@ -35,6 +38,7 @@
     "thread-loader": "^2.1.2",
     "url-loader": "^2.1.0",
     "webpack": "^4.37.0",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
   }
 }

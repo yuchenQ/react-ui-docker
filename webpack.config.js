@@ -50,6 +50,9 @@ module.exports = {
   ],
 
   devServer: {
+    compress: true,
+    port: process.env.DEV_PORT || 8000,
+    open: true,
     stats: {
       colors: true,
 
