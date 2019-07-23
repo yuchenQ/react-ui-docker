@@ -1,0 +1,20 @@
+{
+  "name": "react-ui-docker",
+  "version": "1.0.0",
+  "description": "An react UI project with docker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "React",
+    "Docker"
+  ],
+  "author": "Yuchen Qiao",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.3.2"
+  }
+}
