@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
@@ -43,14 +44,25 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(ROOT, 'src/index.html'),
+      title: 'minHTML',
+      filename: 'index.html',
+      // compress HTML config
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+        useShortDoctype: true,
+      },
     }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer',
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 
   devServer: {
+    contentBase: path.join(__dirname, 'dist'),
     compress: true,
+    hot: true,
     port: process.env.DEV_PORT || 8000,
     open: true,
     stats: {
