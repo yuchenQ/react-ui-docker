@@ -2,5 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'normalize.css';
 import './index.css';
+import App from './components/App';
 
-ReactDOM.render(<div>this is the app</div>, document.querySelector('#root'));
+ReactDOM.render(<App />, document.querySelector('#root'));

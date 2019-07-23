@@ -15,6 +15,7 @@
   "author": "Yuchen Qiao",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.0",
     "concurrently": "^4.1.1",
     "normalize.css": "^8.0.1",
     "react": "^16.8.6",

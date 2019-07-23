@@ -67,7 +67,6 @@ module.exports = {
     open: true,
     stats: {
       colors: true,
-
       assets: false,
       children: false,
       chunks: false,
