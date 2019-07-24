@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Axios from 'axios';
 
-const Header = styled.h1`
+const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,11 +73,11 @@ class App extends Component {
 
     return (
       <Wrapper>
-        <Header data-testid="header">
+        <Title data-testid="title">
           <span role="img" aria-label="dolphin">🐳🔥🐳</span>
           Docker UI Demo
           <span role="img" aria-labelledby="dolphin">🔥🐳🔥</span>
-        </Header>
+        </Title>
         <Button disabled={loading} onClick={this.handleGetCat}>
           Get another cat
         </Button>
