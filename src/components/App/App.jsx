@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Axios from 'axios';
-
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import qantasLogo from '../../assets/images/qantas-logo.png';
 
 const Wrapper = styled.div`
   width: 50rem;
@@ -19,6 +14,20 @@ const Wrapper = styled.div`
   & > *:not(:last-child) {
     margin-bottom: 1rem;
   }
+`;
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Title = styled.div``;
+
+const QantasLogo = styled.img.attrs({
+  alt: 'Qantas',
+  src: qantasLogo,
+})`
 `;
 
 const Button = styled.button`
@@ -74,11 +83,16 @@ class App extends Component {
 
     return (
       <Wrapper>
-        <Title data-testid="title">
-          <span role="img" aria-label="dolphin">🐳🔥🐳</span>
-          Docker UI Demo
-          <span role="img" aria-labelledby="dolphin">🔥🐳🔥</span>
-        </Title>
+        <Header>
+          <div>
+            <QantasLogo data-testid="qantas-logo" />
+          </div>
+          <Title data-testid="title">
+            <span role="img" aria-label="dolphin">🐳🔥🐳</span>
+            Docker UI Demo
+            <span role="img" aria-labelledby="dolphin">🔥🐳🔥</span>
+          </Title>
+        </Header>
         <Button disabled={loading} onClick={this.handleGetCat}>
           Get another cat
         </Button>
