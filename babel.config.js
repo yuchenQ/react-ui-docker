@@ -1,18 +1,18 @@
-module.exports = function(api) {
+module.exports = (api) => {
   api.cache(true);
 
   const presets = [
     [
       '@babel/preset-env',
-      { targets: '> 0.25%, not dead' }
+      { targets: '> 0.25%, not dead', modules: false },
     ],
-    '@babel/preset-react'
+    '@babel/preset-react',
   ];
-  
-  const plugins = [];
+
+  const plugins = ['@babel/plugin-syntax-dynamic-import'];
 
   return {
     presets,
-    plugins
+    plugins,
   };
 };

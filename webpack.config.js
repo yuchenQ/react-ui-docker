@@ -7,6 +7,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const ROOT = path.resolve(__dirname, '.');
+const BUILD_DIR = path.resolve(__dirname, 'build/');
+const SOURCE_DIR = path.resolve(__dirname, 'src/');
+const OUTPUT_FILE_NAME = 'bundle';
 
 threadLoader.warmup({
   // pool options, like passed to loader options
@@ -24,17 +27,22 @@ threadLoader.warmup({
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 
-  entry: path.resolve(ROOT, 'src/index.jsx'),
+  entry: `${SOURCE_DIR}/index.jsx`,
 
   output: {
-    path: path.resolve(ROOT, 'dist'),
-    filename: 'bundle.js',
+    path: BUILD_DIR,
+    filename: `${OUTPUT_FILE_NAME}.js`,
   },
 
   devtool: 'cheap-module-source-map',
 
   resolve: {
     extensions: ['.js', '.jsx'],
+    modules: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules'),
+    ],
+    mainFiles: ['index'],
   },
 
   module: {
@@ -44,6 +52,7 @@ module.exports = {
         process.env.NODE_ENV === 'production'
           ? MiniCssExtractPlugin.loader
           : 'style-loader',
+        'thread-loader',
         {
           loader: 'css-loader',
           options: {
@@ -54,15 +63,37 @@ module.exports = {
     }, {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      use: ['thread-loader', 'babel-loader'],
+      use: ['thread-loader', 'babel-loader?cacheDirectory'],
     }, {
-      test: /\.(png|jpg|gif)$/,
+      test: /\.(gif|png|jpe?g|svg)$/i,
       use: [
         'thread-loader',
         {
           loader: 'url-loader',
           options: {
             limit: 8192,
+          },
+        },
+        {
+          loader: 'image-webpack-loader',
+          options: {
+            mozjpeg: {
+              progressive: true,
+              quality: 65,
+            },
+            optipng: {
+              enabled: true,
+            },
+            pngquant: {
+              quality: '65-90',
+              speed: 4,
+            },
+            gifsicle: {
+              interlaced: false,
+            },
+            webp: {
+              quality: 75,
+            },
           },
         },
       ],
@@ -86,14 +117,14 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
+      filename: `${OUTPUT_FILE_NAME}.css`,
       chunkFilename: '[name].[contenthash].css',
     }),
     new OptimizeCSSAssetsPlugin(),
   ],
 
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: BUILD_DIR,
     compress: true,
     hot: true,
     port: process.env.DEV_PORT || 8000,
