@@ -62,6 +62,7 @@ class App extends Component {
 
   handleGetCat() {
     this.setState({ loading: true });
+
     Axios
       .get('https://api.thecatapi.com/v1/images/search?limit=1&order=random&size=full')
       .then(res => this.setState({ currentCatUrl: res.data[0].url, loading: false }))
