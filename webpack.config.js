@@ -5,6 +5,17 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const ROOT = path.resolve(__dirname, '.');
 
+const threadLoader = require('thread-loader');
+
+threadLoader.warmup({
+  // pool options, like passed to loader options
+  // must match loader options to boot the correct pool
+}, [
+  // modules to load
+  // can be any module, i. e.
+  'babel-loader', 'style-loader', 'css-loader', 'url-loader',
+]);
+
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 
