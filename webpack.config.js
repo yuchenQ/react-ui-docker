@@ -2,10 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const threadLoader = require('thread-loader');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const ROOT = path.resolve(__dirname, '.');
-
-const threadLoader = require('thread-loader');
 
 threadLoader.warmup({
   // pool options, like passed to loader options
@@ -13,7 +14,11 @@ threadLoader.warmup({
 }, [
   // modules to load
   // can be any module, i. e.
-  'babel-loader', 'style-loader', 'css-loader', 'url-loader',
+  MiniCssExtractPlugin.loader,
+  'babel-loader',
+  'style-loader',
+  'css-loader',
+  'url-loader',
 ]);
 
 module.exports = {
@@ -26,6 +31,8 @@ module.exports = {
     filename: 'bundle.js',
   },
 
+  devtool: 'cheap-module-source-map',
+
   resolve: {
     extensions: ['.js', '.jsx'],
   },
@@ -33,7 +40,17 @@ module.exports = {
   module: {
     rules: [{
       test: /\.css$/,
-      use: ['thread-loader', 'style-loader', 'css-loader'],
+      use: [
+        process.env.NODE_ENV === 'production'
+          ? MiniCssExtractPlugin.loader
+          : 'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: true,
+          },
+        },
+      ],
     }, {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
@@ -68,6 +85,11 @@ module.exports = {
       defaultAttribute: 'defer',
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[name].[contenthash].css',
+    }),
+    new OptimizeCSSAssetsPlugin(),
   ],
 
   devServer: {

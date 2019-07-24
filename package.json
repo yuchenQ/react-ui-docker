@@ -4,8 +4,9 @@
   "description": "An react UI project with docker",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "build:watch": "webpack --watch",
+    "build": "npm run build:prod",
+    "build:prod": "NODE_ENV=production webpack --config webpack.config.js",
+    "build:dev": "NODE_ENV=development webpack --config webpack.config.js",
     "start:dev": "webpack-dev-server --color"
   },
   "keywords": [
@@ -35,6 +36,8 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "script-ext-html-webpack-plugin": "^2.1.4",
     "style-loader": "^0.23.1",
     "thread-loader": "^2.1.2",
