@@ -1,4 +1,4 @@
-const webpack = require('webpack');
+const { HotModuleReplacementPlugin } = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
@@ -115,7 +115,7 @@ module.exports = {
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer',
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    new HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: `${OUTPUT_FILE_NAME}.css`,
       chunkFilename: '[name].[contenthash].css',
