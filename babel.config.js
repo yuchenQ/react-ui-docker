@@ -9,7 +9,7 @@ module.exports = (api) => {
     '@babel/preset-react',
   ];
 
-  const plugins = ['@babel/plugin-syntax-dynamic-import'];
+  const plugins = ['@babel/transform-runtime', '@babel/plugin-syntax-dynamic-import'];
 
   return {
     presets,

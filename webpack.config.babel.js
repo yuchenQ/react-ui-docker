@@ -63,11 +63,11 @@ export default () => {
                   progressive: true,
                   quality: 65,
                 },
-                optipng: { enabled: true },
                 pngquant: {
                   quality: '65-90',
                   speed: 4,
                 },
+                optipng: { enabled: true },
                 gifsicle: { interlaced: false },
                 webp: { quality: 75 },
               },
@@ -113,9 +113,7 @@ export default () => {
       host: process.env.DEV_HOST || '0.0.0.0',
       port: process.env.DEV_PORT || 8000,
       historyApiFallback: true,
-      overlay: {
-        errors: true,
-      },
+      overlay: { errors: true },
       open: true,
       stats: {
         colors: true,

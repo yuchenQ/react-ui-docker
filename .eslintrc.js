@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    jest: true,
   },
   extends: [
     'airbnb',
@@ -27,6 +28,7 @@ module.exports = {
         "**/*.stories.jsx", 
         "**/*.spec.*", 
         "./webpack.config.babel.js",
+        "./jest.setupAfterEnv.js"
       ]}
     ],
   },
