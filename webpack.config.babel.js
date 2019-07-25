@@ -1,17 +1,17 @@
-const { HotModuleReplacementPlugin } = require('webpack');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const threadLoader = require('thread-loader');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+import path from 'path';
+import { HotModuleReplacementPlugin } from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
+import { warmup } from 'thread-loader';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 const ROOT = path.resolve(__dirname, '.');
 const BUILD_DIR = path.resolve(__dirname, 'dist');
 const SOURCE_DIR = path.resolve(__dirname, 'src');
 
-threadLoader.warmup({
+warmup({
   // pool options, like passed to loader options
   // must match loader options to boot the correct pool
 }, [
@@ -24,7 +24,7 @@ threadLoader.warmup({
   'url-loader',
 ]);
 
-module.exports = {
+export default {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 
   entry: `${SOURCE_DIR}/index.jsx`,

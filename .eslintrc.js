@@ -21,5 +21,13 @@ module.exports = {
     'react',
   ],
   rules: {
+    "import/no-extraneous-dependencies": [
+      2,
+      { "devDependencies": [
+        "**/*.stories.jsx", 
+        "**/*.spec.*", 
+        "./webpack.config.babel.js",
+      ]}
+    ],
   },
 };
