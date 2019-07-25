@@ -5,11 +5,11 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const threadLoader = require('thread-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const ROOT = path.resolve(__dirname, '.');
-const BUILD_DIR = path.resolve(__dirname, 'build/');
-const SOURCE_DIR = path.resolve(__dirname, 'src/');
-const OUTPUT_FILE_NAME = 'bundle';
+const BUILD_DIR = path.resolve(__dirname, 'dist');
+const SOURCE_DIR = path.resolve(__dirname, 'src');
 
 threadLoader.warmup({
   // pool options, like passed to loader options
@@ -31,7 +31,8 @@ module.exports = {
 
   output: {
     path: BUILD_DIR,
-    filename: `${OUTPUT_FILE_NAME}.js`,
+    filename: '[name].bundle.[hash].js',
+    sourceMapFilename: '[name].js.map',
   },
 
   devtool: 'cheap-module-source-map',
@@ -101,10 +102,13 @@ module.exports = {
   },
 
   plugins: [
+    // CleanWebpackPlugin needs to put ahead of HtmlWebpackPlugin
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(ROOT, 'src/index.html'),
       title: 'minHTML',
       filename: 'index.html',
+      inject: true,
       // compress HTML config
       minify: {
         collapseWhitespace: true,
@@ -117,8 +121,8 @@ module.exports = {
     }),
     new HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-      filename: `${OUTPUT_FILE_NAME}.css`,
-      chunkFilename: '[name].[contenthash].css',
+      filename: '[name].bundle.[hash].css',
+      chunkFilename: '[name].[hash].css',
     }),
     new OptimizeCSSAssetsPlugin(),
   ],
@@ -127,7 +131,12 @@ module.exports = {
     contentBase: BUILD_DIR,
     compress: true,
     hot: true,
+    host: process.env.DEV_HOST || '0.0.0.0',
     port: process.env.DEV_PORT || 8000,
+    historyApiFallback: true,
+    overlay: {
+      errors: true,
+    },
     open: true,
     stats: {
       colors: true,
