@@ -20,7 +20,6 @@
   "scripts": {
     "build": "npm run build:prod",
     "build:prod": "NODE_ENV=production webpack --config webpack.config.babel.js",
-    "build:dev": "NODE_ENV=development webpack --config webpack.config.babel.js",
     "start:dev": "webpack-dev-server --color",
     "test:lint": "eslint --ext .jsx,.js ./src",
     "test:unit": "jest src --config ./jest.config.js --forceExit --detectOpenHandles",
